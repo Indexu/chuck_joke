@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+$CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
 
 echo "Current branch: "
 echo $CURRENT_BRANCH
