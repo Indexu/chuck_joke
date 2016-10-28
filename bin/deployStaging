@@ -1,9 +1,27 @@
 #!/bin/bash
 
-CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
+CURRENT_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
+
+if [ "$CURRENT_BRANCH" -eq "" ]; then
+    CURRENT_BRANCH = $TRAVIS_BRANCH
+fi
+
+HEROKU_APP="staging-chuckjoke"
+
+if [ "$TRAVIS_PULL_REQUEST" -ne "false" ]; then
+    echo "Pull request detected"
+    HEROKU_APP="stage-pullrequest-chuckjoke"
+
+    cp servers/stagingServerPullRequest.txt servers/server.txt
+else
+    cp servers/stagingServerBranch.txt servers/server.txt
+fi
 
 echo "Current branch: "
 echo $CURRENT_BRANCH
 
-heroku git:remote -a staging-chuckjoke -r staging
+echo "Heroku app used: "
+echo $HEROKU_APP
+
+heroku git:remote -a $HEROKU_APP -r staging
 git push staging +$CURRENT_BRANCH:master
