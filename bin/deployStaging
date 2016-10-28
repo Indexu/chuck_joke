@@ -1,11 +1,5 @@
 #!/bin/bash
 
-CURRENT_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
-
-if [ "$CURRENT_BRANCH" = "" ]; then
-    CURRENT_BRANCH=$TRAVIS_BRANCH
-fi
-
 HEROKU_APP="staging-chuckjoke"
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
@@ -18,7 +12,7 @@ else
 fi
 
 echo "Current branch: "
-echo $CURRENT_BRANCH
+echo $TRAVIS_BRANCH
 
 echo "Heroku app used: "
 echo $HEROKU_APP
@@ -26,6 +20,6 @@ echo $HEROKU_APP
 heroku git:remote -a $HEROKU_APP -r staging
 
 echo "DEBUG: RUNNING THIS COMMAND:"
-echo "git push -fu staging $CURRENT_BRANCH:master"
+echo "git push -fu staging $TRAVIS_BRANCH:master"
 
-git push -fu staging $CURRENT_BRANCH:master
+git push -fu staging $TRAVIS_BRANCH:master
