@@ -24,4 +24,8 @@ echo "Heroku app used: "
 echo $HEROKU_APP
 
 heroku git:remote -a $HEROKU_APP -r staging
+
+echo "DEBUG: RUNNING THIS COMMAND:"
+echo "git push -fu staging $CURRENT_BRANCH:master"
+
 git push -fu staging $CURRENT_BRANCH:master
