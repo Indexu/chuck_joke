@@ -1,4 +1,25 @@
 #!/bin/bash
 
-heroku git:remote -a staging-chuckjoke -r staging
-git push staging master
+HEROKU_APP="staging-chuckjoke"
+
+if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+    echo "Pull request detected"
+    HEROKU_APP="stage-pullrequest-chuckjoke"
+
+    cp servers/stagingServerPullRequest.txt servers/server.txt
+else
+    cp servers/stagingServerBranch.txt servers/server.txt
+fi
+
+echo "Current branch: "
+echo $TRAVIS_BRANCH
+
+echo "Heroku app used: "
+echo $HEROKU_APP
+
+heroku git:remote -a $HEROKU_APP -r staging
+
+echo "DEBUG: RUNNING THIS COMMAND:"
+echo "git push -fu staging $TRAVIS_BRANCH:master"
+
+git push -fu staging $TRAVIS_BRANCH:master
