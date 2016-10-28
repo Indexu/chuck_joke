@@ -2,13 +2,13 @@
 
 CURRENT_BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
 
-if [ "$CURRENT_BRANCH" -eq "" ]; then
+if [ "$CURRENT_BRANCH" = "" ]; then
     CURRENT_BRANCH = $TRAVIS_BRANCH
 fi
 
 HEROKU_APP="staging-chuckjoke"
 
-if [ "$TRAVIS_PULL_REQUEST" -ne "false" ]; then
+if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     echo "Pull request detected"
     HEROKU_APP="stage-pullrequest-chuckjoke"
 
