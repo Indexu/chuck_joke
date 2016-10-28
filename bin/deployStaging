@@ -1,7 +1,9 @@
 #!/bin/bash
 
+$CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
 echo "Current branch: "
-echo $TRAVIS_BRANCH 
+echo $CURRENT_BRANCH
 
 heroku git:remote -a staging-chuckjoke -r staging
-git push staging +$TRAVIS_BRANCH:master
+git push staging +$CURRENT_BRANCH:master
